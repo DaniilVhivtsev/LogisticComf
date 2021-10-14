@@ -12,33 +12,20 @@ Add new user
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
-<form method="post" th:action="@{/registration}" th:object="${person}">
+<form method="post" th:action="@{/registration}">
 
-<!--    <div>-->
-<!--        <label>-->
-<!--            Your company name :-->
-<!--            <input type="text" name="company_name" th:field="*{company_name}"/>-->
-<!--        </label>-->
-<!--    </div>-->
-
-<!--    <div>-->
-<!--        <label>-->
-<!--            Email :-->
-<!--            <input type="text" name="email" th:field="*{email}"/>-->
-<!--        </label>-->
-<!--    </div>-->
 
     <div>
         <label>
             User Name :
-            <input type="text" name="username" th:field="*{username}"/>
+            <input type="text" name="username"/>
         </label>
     </div>
 
     <div>
         <label>
             Password:
-            <input type="password" name="password" th:field="*{password}"/>
+            <input type="password" name="password"/>
         </label>
     </div>
 
