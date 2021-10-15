@@ -24,6 +24,15 @@ public class User implements UserDetails {
 //
 //    @ManyToOne
 //    private Company company;
+//
+//
+//    public Company getCompany() {
+//        return company;
+//    }
+//
+//    public void setCompany(Company company) {
+//        this.company = company;
+//    }
 
     public Long getId() {
         return id;
