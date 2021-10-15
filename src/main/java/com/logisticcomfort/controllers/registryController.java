@@ -42,7 +42,7 @@ public class registryController {
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-        userRepo.save(user);
+//        userRepo.save(user);
 
 //        var set = new HashSet<User>();
 //        set.add(user);
@@ -50,13 +50,18 @@ public class registryController {
 //        var company = new Company();
 //        company.setAuthor(set);
 //        company.setName("Industry");
-//        company.setId((long) 1);
-//        companyRepo.save(company);
+//        company.setId((long) 2);
 
-        var comp = companyRepo.findById(1);
-        comp.addAuthor(user);
-        companyRepo.save(comp);
 
+
+
+
+        var company = companyRepo.findById(1);
+        company.addAuthor(user);
+
+        user.setCompany(company);
+        userRepo.save(user);
+        companyRepo.save(company);
 
         return "redirect:/login";
     }
@@ -64,13 +69,19 @@ public class registryController {
     @GetMapping()
     public String main(@AuthenticationPrincipal User user){
 
-        for (var use: companyRepo.findById(1).getAuthor()
+        var id = (long)user.getCompany().getId();
+
+        var company = companyRepo.findById(id);
+
+        for (var use: company.getAuthor()
         ){
             System.out.println(use.getUsername());
         }
 
 //        var comp = user.getCompany();
+        System.out.println("\n");
         System.out.println(user.getUsername());
+        System.out.println(user.getCompany().getName());
 //        System.out.println(comp.getName());
 //        for (var user:companyRepo.findAllUsers()
 //             ) {

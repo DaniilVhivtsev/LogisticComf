@@ -16,8 +16,8 @@ public class Company {
     private String name;
 
 //    , mappedBy="company"
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company")
+//    @JoinColumn(name = "company")
+    @OneToMany(mappedBy="company", fetch = FetchType.EAGER)
     private Set<User> author;
 
 
