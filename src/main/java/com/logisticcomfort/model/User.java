@@ -21,6 +21,9 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+//
+//    @ManyToOne
+//    private Company company;
 
     public Long getId() {
         return id;

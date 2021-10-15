@@ -1,5 +1,8 @@
 package com.logisticcomfort.model;
 
+import com.logisticcomfort.repos.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -8,13 +11,13 @@ import java.util.Set;
 public class Company {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
 
+//    , mappedBy="company"
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "company")
     private Set<User> author;
 
 

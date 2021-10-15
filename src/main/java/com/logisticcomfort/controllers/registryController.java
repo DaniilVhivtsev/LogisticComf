@@ -6,6 +6,7 @@ import com.logisticcomfort.model.User;
 import com.logisticcomfort.repos.CompanyRepo;
 import com.logisticcomfort.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,22 +44,33 @@ public class registryController {
         user.setRoles(Collections.singleton(Role.USER));
         userRepo.save(user);
 
-        var company = new Company();
-
         var set = new HashSet<User>();
         set.add(user);
 
+        var company = new Company();
         company.setAuthor(set);
         company.setName("Industry");
-
-//        company.addAuthor(user);
+        company.setId(userRepo.count());
         companyRepo.save(company);
 
         return "redirect:/login";
     }
 
     @GetMapping()
-    public String main(){
+    public String main(@AuthenticationPrincipal User user){
+
+//        for (var use: companyRepo.findById(1).getAuthor()
+//        ){
+//            System.out.println(use.getUsername());
+//        }
+
+        System.out.println(user.getUsername());
+//        for (var user:companyRepo.findAllUsers()
+//             ) {
+//            System.out.println(user.getUsername());
+//        }
+
+
         return "hello";
     }
 }
