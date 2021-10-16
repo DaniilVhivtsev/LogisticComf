@@ -19,11 +19,15 @@ import java.util.Map;
 @Controller
 public class registryController {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+
+    private final CompanyRepo companyRepo;
 
     @Autowired
-    private CompanyRepo companyRepo;
+    public registryController(UserRepo userRepo, CompanyRepo companyRepo) {
+        this.userRepo = userRepo;
+        this.companyRepo = companyRepo;
+    }
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -91,12 +95,14 @@ public class registryController {
 //    }
 
     @GetMapping()
-    public String mainPage(@AuthenticationPrincipal User user){
+    public String mainPage(@AuthenticationPrincipal User user, Model model){
 
-        if (user.getCompany() == null)
-            return "create_company";
+        if(user.getCompany() == null)
+            return "redirect:/create/company";
 
+        model.addAttribute("company", user.getCompany());
 
+        return "main";
     }
 }
 
