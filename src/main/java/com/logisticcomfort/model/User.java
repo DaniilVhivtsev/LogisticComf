@@ -1,9 +1,11 @@
 package com.logisticcomfort.model;
 
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.Collection;
 import java.util.Set;
 
@@ -16,16 +18,25 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private boolean active;
+    private String email;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @ManyToOne (optional=true, cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "COMPANY_ID", nullable = true)
     private Company company;
 
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Company getCompany() {
         return company;

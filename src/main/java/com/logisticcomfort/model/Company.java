@@ -2,8 +2,10 @@ package com.logisticcomfort.model;
 
 import com.logisticcomfort.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.Set;
 
 @Entity
@@ -17,7 +19,7 @@ public class Company {
 
 //    , mappedBy="company"
 //    @JoinColumn(name = "company")
-    @OneToMany(mappedBy="company", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy="company", fetch = FetchType.LAZY)
     private Set<User> author;
 
 
