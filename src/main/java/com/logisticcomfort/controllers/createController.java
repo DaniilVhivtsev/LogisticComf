@@ -47,8 +47,10 @@ public class createController {
         var set = new HashSet<User>();
         set.add(user);
 
+        company.setId(companyRepo.count() + 1);
         company.setAuthor(set);
         user.setCompany(company);
+
         userRepo.save(user);
 
         return "redirect:/";

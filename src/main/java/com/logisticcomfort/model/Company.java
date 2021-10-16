@@ -13,7 +13,7 @@ import java.util.Set;
 public class Company {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
@@ -26,7 +26,7 @@ public class Company {
     private String phoneNumber;
     private String email;
     private String addressMainOffice;
-//    private String description;
+    private String description;
 
 
     public String getEmail() {
@@ -53,13 +53,13 @@ public class Company {
         this.addressMainOffice = addressMainOffice;
     }
 
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description.replace("\n", "<br>");
+    }
 
     public Set<User> getAuthor() {
         return author;

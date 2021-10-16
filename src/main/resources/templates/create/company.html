@@ -29,6 +29,9 @@
             <!--            <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>-->
             <br>
 
+            <label for="description">Enter description of the main office: </label>
+            <textarea name="comment" th:field="*{description}" id="description"></textarea>
+
             <input type="submit" value="Create!"/>
         </form>
     </body>

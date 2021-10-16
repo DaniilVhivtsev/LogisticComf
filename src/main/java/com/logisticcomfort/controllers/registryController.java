@@ -100,8 +100,7 @@ public class registryController {
         if(user.getCompany() == null)
             return "redirect:/create/company";
 
-        model.addAttribute("company", user.getCompany());
-
+        model.addAttribute("company", companyRepo.findById((long)user.getCompany().getId()));
         return "main";
     }
 }
