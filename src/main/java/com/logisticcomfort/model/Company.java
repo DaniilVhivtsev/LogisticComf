@@ -1,11 +1,8 @@
 package com.logisticcomfort.model;
 
-import com.logisticcomfort.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -13,19 +10,26 @@ import java.util.Set;
 public class Company {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
-
+    @Column(name = "name")
     private String name;
 
 //    , mappedBy="company"
 //    @JoinColumn(name = "company")
     @OneToMany(mappedBy="company", fetch = FetchType.LAZY)
     private Set<User> author;
-
+    @Column(name = "phoneNumber")
     private String phoneNumber;
+//    @NotBlank(message = "Обязательное поле, введите почту")
+    @Column(name = "email")
     private String email;
+//    @NotBlank(message = "Обязательное поле, введите адрес")
+    @Column(name = "addressMainOffice")
     private String addressMainOffice;
+//    @NotBlank(message = "Обязательное поле, введите описание компании")
+    @Column(name = "description")
     private String description;
 
 
@@ -58,7 +62,7 @@ public class Company {
     }
 
     public void setDescription(String description) {
-        this.description = description.replace("\n", "<br>");
+        this.description = description;
     }
 
     public Set<User> getAuthor() {
