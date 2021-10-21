@@ -42,6 +42,8 @@ public class registryController {
             return "registration";
         }
 
+
+
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.ADMIN));
         userRepo.save(user);
