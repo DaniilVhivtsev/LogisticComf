@@ -19,7 +19,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<form class="row g-3 needs-validation" th:action="@{/create/warehouse}"
+<form class="row g-3 needs-validation"  novalidate th:method="POST" th:action="@{/create/warehouse}"
       th:object="${warehouse}">
 
     <div class="col-md-4">

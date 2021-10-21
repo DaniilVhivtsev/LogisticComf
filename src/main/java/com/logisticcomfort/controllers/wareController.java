@@ -34,7 +34,7 @@ public class wareController {
     @GetMapping("/warehouse")
     public String createWarehouse(Model model){
         model.addAttribute("warehouse", new Warehouse());
-        return "add/warehouse";
+        return "create/warehouse";
     }
 
     @PostMapping("/warehouse")
