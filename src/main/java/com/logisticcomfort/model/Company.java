@@ -1,8 +1,6 @@
 package com.logisticcomfort.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -10,9 +8,9 @@ import java.util.Set;
 public class Company {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "name")
     private String name;
 
@@ -20,6 +18,10 @@ public class Company {
 //    @JoinColumn(name = "company")
     @OneToMany(mappedBy="company", fetch = FetchType.LAZY)
     private Set<User> author;
+
+//    @OneToMany(mappedBy="company", fetch = FetchType.LAZY)
+//    private Set<Warehouse> warehouses;
+
     @Column(name = "phoneNumber")
     private String phoneNumber;
 //    @NotBlank(message = "Обязательное поле, введите почту")
@@ -92,4 +94,17 @@ public class Company {
     public void setName(String name) {
         this.name = name;
     }
+//
+//    public Set<Warehouse> getWarehouses() {
+//        return warehouses;
+//    }
+//
+//    public void setWarehouses(Set<Warehouse> warehouses) {
+//        this.warehouses = warehouses;
+//    }
+//
+//    public void addAWarehouse(Warehouse warehouse) {
+//        this.warehouses.add(warehouse);
+//    }
+
 }

@@ -4,6 +4,7 @@ import com.logisticcomfort.model.Company;
 import com.logisticcomfort.model.User;
 import com.logisticcomfort.repos.CompanyRepo;
 import com.logisticcomfort.repos.UserRepo;
+import com.logisticcomfort.repos.WarehouseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,11 +24,12 @@ public class createController {
 
     private final CompanyRepo companyRepo;
     private final UserRepo userRepo;
-
+    private final WarehouseRepo warehouseRepo;
     @Autowired
-    public createController(CompanyRepo companyRepo, UserRepo userRepo) {
+    public createController(CompanyRepo companyRepo, UserRepo userRepo, WarehouseRepo warehouseRepo) {
         this.companyRepo = companyRepo;
         this.userRepo = userRepo;
+        this.warehouseRepo = warehouseRepo;
     }
 
     @GetMapping("/company")
@@ -55,4 +57,6 @@ public class createController {
 
         return "redirect:/";
     }
+
+
 }
