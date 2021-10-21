@@ -1,119 +1,64 @@
 package com.logisticcomfort.controllers;
 
+import com.logisticcomfort.DAO.PersonDAO;
+import com.logisticcomfort.model.Person;
 import com.logisticcomfort.model.Role;
 import com.logisticcomfort.model.User;
-import com.logisticcomfort.repos.CompanyRepo;
 import com.logisticcomfort.repos.UserRepo;
-import com.logisticcomfort.repos.WarehouseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.Collections;
 
 @Controller
 public class registryController {
 
-    private final UserRepo userRepo;
-
-    private final CompanyRepo companyRepo;
-
-    private final WarehouseRepo warehouseRepo;
+    private final PersonDAO personDAO;
 
     @Autowired
-    public registryController(UserRepo userRepo, CompanyRepo companyRepo, WarehouseRepo warehouseRepo) {
-        this.userRepo = userRepo;
-        this.companyRepo = companyRepo;
-        this.warehouseRepo = warehouseRepo;
+    public registryController(PersonDAO personDAO) {
+        this.personDAO = personDAO;
     }
+
+    @Autowired
+    private UserRepo userRepo;
 
     @GetMapping("/registration")
     public String registration(Model model) {
+        model.addAttribute("person", new Person());
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String addUser(User user) {
-        User userFromDb = userRepo.findByUsername(user.getUsername());
-
-        if (userFromDb != null) {
-            return "registration";
-        }
-
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.ADMIN));
-        userRepo.save(user);
-
-//        userRepo.save(user);
-
-//        var set = new HashSet<User>();
-//        set.add(user);
+    public String addUser(@ModelAttribute("person") @Valid Person person,
+                          BindingResult bindingResult){
+//        User userFromDb =  userRepo.findByUsername(user.getUsername());
 //
-//        var company = new Company();
-//        company.setAuthor(set);
-//        company.setName("Industry");
-//        company.setId((long) 2);
-
-
-//        var company = companyRepo.findById(1);
-//        company.addAuthor(user);
+////        if(userFromDb != null){
+////            //если такой пользователь есть
+////        }
 //
-//        user.setCompany(company);
+//        user.setActive(true);
+//        user.setRoles(Collections.singleton(Role.USER));
 //        userRepo.save(user);
-//        companyRepo.save(company);
+//        return "redirect:/login";
 
-        return "redirect:/login";
+//        if(bindingResult.hasErrors())
+//            return "/registration";
+
+        personDAO.Save(person);
+        return "login";
+
     }
-
-//    @GetMapping()
-//    public String main(@AuthenticationPrincipal User user){
-
-//        if (user.getCompany() == null)
-//            return "create_company";
-
-//        var id = (long)user.getCompany().getId();
-//
-//        var company = companyRepo.findById(id);
-//
-//        for (var use: company.getAuthor()
-//        ){
-//            System.out.println(use.getUsername());
-//        }
-
-//        var comp = user.getCompany();
-//        System.out.println("\n");
-//        System.out.println(user.getUsername());
-//        System.out.println(user.getCompany().getName());
-//        System.out.println(comp.getName());
-//        for (var user:companyRepo.findAllUsers()
-//             ) {
-//            System.out.println(user.getUsername());
-//        }
-//        return "hello";
-//    }
 
     @GetMapping()
-    public String mainPage(@AuthenticationPrincipal User user, Model model){
-
-        if(user.getCompany() == null)
-            return "redirect:/create/company";
-
-        model.addAttribute("company", companyRepo.findById((long)user.getCompany().getId()));
-        return "main";
+    public String main(){
+        return "hello";
     }
-
-//    @GetMapping()
-//    public String mainPageW(@AuthenticationPrincipal User user, Model model){
-//
-//        if(user.getWarehouse() == null)
-//            return "redirect:/create/warehouse";
-//
-//        model.addAttribute("warehouse", warehouseRepo.findById((long)user.getWarehouse().getId()));
-//        return "company";
-//    }
 }
-
-
