@@ -2,8 +2,10 @@ package com.logisticcomfort.controllers;
 
 import com.logisticcomfort.model.Company;
 import com.logisticcomfort.model.User;
+import com.logisticcomfort.model.Warehouse;
 import com.logisticcomfort.repos.CompanyRepo;
 import com.logisticcomfort.repos.UserRepo;
+import com.logisticcomfort.repos.WarehouseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,11 +25,12 @@ public class createController {
 
     private final CompanyRepo companyRepo;
     private final UserRepo userRepo;
-
+    private final WarehouseRepo warehouseRepo;
     @Autowired
-    public createController(CompanyRepo companyRepo, UserRepo userRepo) {
+    public createController(CompanyRepo companyRepo, UserRepo userRepo, WarehouseRepo warehouseRepo) {
         this.companyRepo = companyRepo;
         this.userRepo = userRepo;
+        this.warehouseRepo = warehouseRepo;
     }
 
     @GetMapping("/company")
@@ -55,4 +58,46 @@ public class createController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/warehouse")
+    public String createWarehouse(Model model){
+        model.addAttribute("warehouse", new Warehouse());
+        return "create/warehouse";
+    }
+
+    @PostMapping("/warehouse")
+    public String CreateWare(@ModelAttribute("warehouse") @Valid Warehouse warehouse,
+                             BindingResult bindingResult,
+                             @AuthenticationPrincipal User user){
+
+//        var set = new HashSet<User>();
+//        set.add(user);
+
+        var comp = companyRepo.findById((long)user.getCompany().getId());
+//        warehouse.setId(warehouseRepo.count() + 1);
+
+        var set = new HashSet<Warehouse>();
+        set.add(warehouse);
+        comp.setWarehouses(set);
+
+        warehouse.setComp(comp);
+
+        warehouseRepo.save(warehouse);
+
+
+
+        companyRepo.save(comp);
+
+
+
+
+//        warehouse.setAuthor(set);
+//        user.setWarehouse(warehouse);
+//
+//        userRepo.save(user);
+
+        return "redirect:/";
+    }
+
+
 }

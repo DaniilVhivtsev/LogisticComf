@@ -1,10 +1,10 @@
 package com.logisticcomfort.controllers;
 
-import com.logisticcomfort.model.Company;
 import com.logisticcomfort.model.Role;
 import com.logisticcomfort.model.User;
 import com.logisticcomfort.repos.CompanyRepo;
 import com.logisticcomfort.repos.UserRepo;
+import com.logisticcomfort.repos.WarehouseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Map;
 
 @Controller
 public class registryController {
@@ -23,10 +21,13 @@ public class registryController {
 
     private final CompanyRepo companyRepo;
 
+    private final WarehouseRepo warehouseRepo;
+
     @Autowired
-    public registryController(UserRepo userRepo, CompanyRepo companyRepo) {
+    public registryController(UserRepo userRepo, CompanyRepo companyRepo, WarehouseRepo warehouseRepo) {
         this.userRepo = userRepo;
         this.companyRepo = companyRepo;
+        this.warehouseRepo = warehouseRepo;
     }
 
     @GetMapping("/registration")
@@ -105,6 +106,16 @@ public class registryController {
         model.addAttribute("company", companyRepo.findById((long)user.getCompany().getId()));
         return "main";
     }
+
+//    @GetMapping()
+//    public String mainPageW(@AuthenticationPrincipal User user, Model model){
+//
+//        if(user.getWarehouse() == null)
+//            return "redirect:/create/warehouse";
+//
+//        model.addAttribute("warehouse", warehouseRepo.findById((long)user.getWarehouse().getId()));
+//        return "company";
+//    }
 }
 
 
